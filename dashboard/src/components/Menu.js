@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom"
+import Logoutbtn from "./Logoutbtn";
+import { useSelector } from "react-redux";
+
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-
+  const userData = useSelector((state) => state.auth.userData);
+  
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
   };
@@ -22,7 +26,7 @@ const Menu = () => {
           <li>
             <Link
               style={{ textDecoration: "none" }}
-              to="/"
+              to={`/${userData}`}
               onClick={() => handleMenuClick(0)}
             >
               <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
@@ -82,6 +86,17 @@ const Menu = () => {
             >
               <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
                 Apps
+              </p>
+            </Link>
+          </li>
+          <li>
+            <Link
+              style={{ textDecoration: "none" }}
+              // to="/logout"
+              onClick={() => handleMenuClick(6)}
+            >
+              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
+                <Logoutbtn/>
               </p>
             </Link>
           </li>

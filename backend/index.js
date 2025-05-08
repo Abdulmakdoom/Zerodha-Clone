@@ -6,6 +6,9 @@ import { Position } from "./schemas/PositionSchema.js"
 import { Order } from "./schemas/OrderSchema.js"
 import bodyParser from "body-parser"
 import cors from "cors"
+import { User } from "./schemas/userSchema.js"
+import cookieParser from "cookie-parser"; 
+import jwt from "jsonwebtoken"
 
 dotenv.config({
     path: "./.env"
@@ -16,8 +19,15 @@ dotenv.config({
 const PORT = process.env.PORT || 3002
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:3001"],
+  credentials: true,
+}))
 app.use(bodyParser.json())
+// app.use(express.json({limit: "16kb"}))
+// app.use(express.urlencoded({extended: true, limit: "16kb"}))
+// app.use(express.static("public"))
+app.use(cookieParser())
 
 
 const connectDB = async ()=> {
@@ -201,6 +211,32 @@ const connectDB = async ()=> {
 //       res.send("position send")
 // })
 
+const verifyJWT = async (req, _, next)=> {
+  try {
+    const token = req.cookies?.accessToken
+
+    if (!token) {
+      console.log("Unauthorized request or AccessToken missing")
+    }
+
+    const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    
+
+    const user = await User.findById(decodeToken?._id).select("-password -refreshToken")
+
+    if (!user) {  
+      console.log("Invalid Access Token")
+    }
+
+    req.user = user;
+
+    next()
+    
+  } catch (error) {
+    console.log(error?.message || "Invalid access token")
+  }
+}
+
 app.get("/allHoldings", async (req, res) => {
     let allHoldings = await Holding.find({});
     res.json(allHoldings);
@@ -223,6 +259,70 @@ app.get("/allHoldings", async (req, res) => {
   
     res.send("Order saved!");
   });
+
+  app.post("/register", async (req, res)=> {
+    const { username, email, password} = req.body
+    
+
+    const existedUser =  await User.findOne({
+      $or: [{username}, {email}]
+    })
+    if (existedUser) {
+      console.log("User with email or username already exists")
+    }
+
+    const user = await User.create({
+      username: username,
+      email: email,
+      password: password
+    })
+
+    if (!user) {
+      console.log("Something went wrong while registering the user")
+    }
+
+    return res.status(201).json(user)
+
+  })
+
+  app.post("/login", async(req, res)=> {
+    const {email, password} = req.body;
+
+    const user = await User.findOne({email : email});
+
+    if (!user) {
+      console.log( "User does not exist");
+    }
+
+    const isPasswordValid = await user.isPasswordCorrect(password)
+    if (!isPasswordValid) {
+      console.log("Invalid user credentials");
+    }
+
+    const accessToken = await user.generateAccessToken()
+
+    const loggedInUser = await User.findById(user._id).select("-password");
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    }
+
+    return res
+    .cookie("accessToken", accessToken, cookieOptions)
+    .json(loggedInUser)
+  })
+
+  app.post("/logout", verifyJWT, async (req, res)=> {
+    const options = { 
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+  }
+
+  return res.clearCookie("accessToken", options).json("User logged Out")
+  })
 
 
 connectDB().then(()=> {

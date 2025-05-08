@@ -1,10 +1,18 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { user } from "../store/authSlice";
 
 const Summary = () => {
+  const dispatch = useDispatch()
+  const {username} = useParams()
+  dispatch(user(username))
+
+
   return (
     <>
       <div className="username">
-        <h6>Hi, User!</h6>
+        <h6>Hi, {username}!</h6>
         <hr className="divider" />
       </div>
 
@@ -57,8 +65,14 @@ const Summary = () => {
         </div>
         <hr className="divider" />
       </div>
+      
     </>
+    
   );
 };
 
-export default Summary;
+
+
+export {
+  Summary,
+};
