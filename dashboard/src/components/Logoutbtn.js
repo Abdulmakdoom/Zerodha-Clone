@@ -5,13 +5,12 @@ export default function Logoutbtn() {
     try {
       const response = await fetch("http://localhost:3002/logout", {
         method: "POST",
-        credentials: "include", // Important to send cookies
+        credentials: "include", // Send cookies
       });
 
       if (response.ok) {
         const result = await response.json();
-        alert(result); // or show a toast, or redirect
-        // Optionally, redirect to login page:
+        alert(result);
         window.location.href = "http://localhost:3000";
       } else {
         alert("Logout failed.");
@@ -22,7 +21,11 @@ export default function Logoutbtn() {
   };
 
   return (
-    <button className="btn btn-outline-danger" onClick={handleLogout}>
+    <button
+      className="btn btn-link bg-white text-black text-decoration-none"
+      style={{ fontSize: "1rem" }}
+      onClick={handleLogout}
+    >
       Logout
     </button>
   );

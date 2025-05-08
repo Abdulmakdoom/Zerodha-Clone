@@ -12,7 +12,7 @@ import Navbar from './landing_page/Navbar.js';
 import Footer from './landing_page/Footer.js';
 import NotFound from './landing_page/NotFound.js';
 import Login from './landing_page/login/Login.js';
-import Logoutbtn from './landing_page/Logoutbtn.js';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

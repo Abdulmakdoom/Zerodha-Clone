@@ -211,31 +211,28 @@ const connectDB = async ()=> {
 //       res.send("position send")
 // })
 
-const verifyJWT = async (req, _, next)=> {
+const verifyJWT = async (req, res, next) => {
   try {
-    const token = req.cookies?.accessToken
+    const token = req.cookies?.accessToken;
 
     if (!token) {
-      console.log("Unauthorized request or AccessToken missing")
+      return res.status(401).json({ message: "Unauthorized request. Access token missing." });
     }
 
-    const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-    
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = await User.findById(decoded._id).select("-password -refreshToken");
 
-    const user = await User.findById(decodeToken?._id).select("-password -refreshToken")
-
-    if (!user) {  
-      console.log("Invalid Access Token")
+    if (!user) {
+      return res.status(401).json({ message: "Invalid access token. User not found." });
     }
 
     req.user = user;
-
-    next()
-    
+    next();
   } catch (error) {
-    console.log(error?.message || "Invalid access token")
+    return res.status(401).json({ message: error.message || "Invalid access token." });
   }
-}
+};
+
 
 app.get("/allHoldings", async (req, res) => {
     let allHoldings = await Holding.find({});
@@ -247,18 +244,25 @@ app.get("/allHoldings", async (req, res) => {
     res.json(allPositions);
   });
 
-  app.post("/newOrder", async (req, res) => {
+  app.post("/newOrder", verifyJWT, async (req, res) => {
     let newOrder = new Order ({
       name: req.body.name,
       qty: req.body.qty,
       price: req.body.price,
       mode: req.body.mode,
+      username: req.user._id
     });
   
     newOrder.save();
   
     res.send("Order saved!");
   });
+
+  app.get("/order", verifyJWT, async(req, res)=>{
+    let order = await Order.find({username : req.user._id})
+    
+    res.json(order)
+  })
 
   app.post("/register", async (req, res)=> {
     const { username, email, password} = req.body

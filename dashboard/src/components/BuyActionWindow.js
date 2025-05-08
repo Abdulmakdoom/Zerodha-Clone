@@ -17,7 +17,9 @@ const BuyActionWindow = ({ uid }) => {
       qty: stockQuantity,
       price: stockPrice,
       mode: "BUY",
-    });
+    }, {
+      withCredentials: true, // ✅ send cookies like accessToken
+    })
 
     GeneralContext.closeBuyWindow();
   };

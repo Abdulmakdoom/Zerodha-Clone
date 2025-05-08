@@ -21,7 +21,7 @@ const Menu = () => {
   return (
     <div className="menu-container">
       <img src="logo.png" style={{ width: "50px" }} />
-      <div className="menus">
+      <div className="menus mt-4 pt-2">
         <ul>
           <li>
             <Link
@@ -102,9 +102,9 @@ const Menu = () => {
           </li>
         </ul>
         <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+        <div className="profile pb-2" onClick={handleProfileClick}>
+          <div className="avatar mb-4">{userData?.slice(0,2)?.toUpperCase()}</div>
+          <p className="username pb-4 mt-3">{userData}</p>
         </div>
       </div>
     </div>

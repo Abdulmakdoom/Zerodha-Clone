@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logoutbtn from './Logoutbtn';
 
 function Navbar(){
 
@@ -55,11 +54,6 @@ function Navbar(){
                     <li class="nav-item">
                         <Link class="nav-link active" to="/support">
                         Support
-                        </Link>
-                    </li>
-                    <li class="nav-item">
-                        <Link class="nav-link active" to="/logout">
-                        <Logoutbtn/>
                         </Link>
                     </li>
                     </ul>
