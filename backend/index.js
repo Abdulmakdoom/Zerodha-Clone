@@ -6,7 +6,7 @@ import { Position } from "./schemas/PositionSchema.js"
 import { Order } from "./schemas/OrderSchema.js"
 import bodyParser from "body-parser"
 import cors from "cors"
-import { User } from "./schemas/userSchema.js"
+import { User } from "./schemas/UserSchema.js"
 import cookieParser from "cookie-parser"; 
 import jwt from "jsonwebtoken"
 
