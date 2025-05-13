@@ -21,7 +21,7 @@ const app = express()
 
 app.use(cors({
   origin: ["https://zerodha-clone-r7g5.vercel.app", "https://zerodha-clone-brown.vercel.app"],
-  credentials: true,
+  credentials: true, // allow cookies
 }))
 app.use(bodyParser.json())
 // app.use(express.json({limit: "16kb"}))

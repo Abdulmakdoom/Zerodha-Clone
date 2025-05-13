@@ -36,7 +36,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         setMessage(`Welcome back, ${data.username || data.email}!`);
-        window.location.href = `https://zerodha-clone-brown.vercel.app//${data.username}`;
+        window.location.href = `https://zerodha-clone-brown.vercel.app/${data.username}`;
         // optionally redirect to dashboard
       } else {
         setMessage("Invalid credentials or user does not exist.");
