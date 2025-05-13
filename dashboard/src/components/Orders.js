@@ -35,7 +35,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3002/order", {
+        const response = await fetch("https://zerodha-clone-oqrc.onrender.com/order", {
           credentials: "include",
         });
         const result = await response.json();

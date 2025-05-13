@@ -6,7 +6,7 @@ export default function Logoutbtn() {
   const dispatch = useDispatch()
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3002/logout", {
+      const response = await fetch("https://zerodha-clone-oqrc.onrender.com/logout", {
         method: "POST",
         credentials: "include", // Send cookies
       });

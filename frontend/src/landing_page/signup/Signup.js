@@ -25,7 +25,7 @@ export default function ZerodhaStyleSignup() {
     }
 
     try {
-      const response = await fetch("http://localhost:3002/register", {
+      const response = await fetch("https://zerodha-clone-oqrc.onrender.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
