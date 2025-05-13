@@ -26,9 +26,9 @@ export default function Login() {
     try {
       const response = await fetch("https://zerodha-clone-oqrc.onrender.com/login", {
         method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json"
-        // },
+        headers: {
+          "Content-Type": "application/json"
+        },
         credentials: "include", // Important for sending cookies!
         body: JSON.stringify(formData)
       });
