@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3002
 const app = express()
 
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: ["https://zerodha-clone-r7g5.vercel.app", "https://zerodha-clone-brown.vercel.app"],
   credentials: true,
 }))
 app.use(bodyParser.json())
