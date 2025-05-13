@@ -20,9 +20,13 @@ const PORT = process.env.PORT || 3002
 const app = express()
 
 app.use(cors({
-  origin: ["https://zerodha-clone-r7g5.vercel.app", "https://zerodha-clone-brown.vercel.app"],
-  credentials: true, // allow cookies
-}))
+  origin: [
+    "https://zerodha-clone-r7g5.vercel.app",  // e.g., your dashboard
+    "https://zerodha-clone-brown.vercel.app"  // e.g., your login/signup
+  ],
+  credentials: true
+}));
+
 app.use(bodyParser.json())
 // app.use(express.json({limit: "16kb"}))
 // app.use(express.urlencoded({extended: true, limit: "16kb"}))
@@ -289,34 +293,38 @@ app.get("/allHoldings", async (req, res) => {
 
   })
 
-  app.post("/login", async(req, res)=> {
-    const {email, password} = req.body;
-
-    const user = await User.findOne({email : email});
-
+  app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+  
+    const user = await User.findOne({ email });
+  
     if (!user) {
-      console.log( "User does not exist");
+      console.log("User does not exist");
+      return res.status(400).json({ message: "Invalid credentials" });
     }
-
-    const isPasswordValid = await user.isPasswordCorrect(password)
+  
+    const isPasswordValid = await user.isPasswordCorrect(password);
     if (!isPasswordValid) {
       console.log("Invalid user credentials");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-
-    const accessToken = await user.generateAccessToken()
-
+  
+    const accessToken = await user.generateAccessToken();
     const loggedInUser = await User.findById(user._id).select("-password");
-
+  
     const cookieOptions = {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-    }
-
+      maxAge: 1000 * 60 * 15 // 15 minutes or whatever your token duration is
+    };
+  
     return res
-    .cookie("accessToken", accessToken, cookieOptions)
-    .json(loggedInUser)
-  })
+      .cookie("accessToken", accessToken, cookieOptions)
+      .status(200)
+      .json(loggedInUser);
+  });
+  
 
   app.post("/logout", verifyJWT, async (req, res)=> {
     const options = { 
