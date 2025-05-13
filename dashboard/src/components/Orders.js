@@ -26,7 +26,7 @@
 
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -39,6 +39,9 @@ const Orders = () => {
           credentials: "include",
         });
         const result = await response.json();
+        if(!response.ok) {
+          window.location.href = "http://localhost:3000/login"
+        }
         setOrders(result);
       } catch (error) {
         console.error("Error fetching orders:", error);

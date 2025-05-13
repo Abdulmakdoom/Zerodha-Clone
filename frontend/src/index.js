@@ -17,11 +17,6 @@ import Login from './landing_page/login/Login.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    {/* <React.StrictMode>
-      <>
-      <HomePage/>
-      </>
-    </React.StrictMode> */}
     <Navbar/>
     <Routes>
       <Route path='/' element={<HomePage/>}></Route>

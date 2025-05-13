@@ -250,7 +250,7 @@ app.get("/allHoldings", async (req, res) => {
       qty: req.body.qty,
       price: req.body.price,
       mode: req.body.mode,
-      username: req.user._id
+      username: req.user._id 
     });
   
     newOrder.save();

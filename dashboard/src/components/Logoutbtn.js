@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/authSlice";
 
 export default function Logoutbtn() {
+  const dispatch = useDispatch()
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3002/logout", {
@@ -10,6 +13,7 @@ export default function Logoutbtn() {
 
       if (response.ok) {
         const result = await response.json();
+        dispatch(logout())
         alert(result);
         window.location.href = "http://localhost:3000";
       } else {
