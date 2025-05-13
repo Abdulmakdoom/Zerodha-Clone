@@ -40,7 +40,7 @@ const Orders = () => {
         });
         const result = await response.json();
         if(!response.ok) {
-          window.location.href = "http://localhost:3000/login"
+          window.location.href = "https://zerodha-clone-r7g5.vercel.app/login"
         }
         setOrders(result);
       } catch (error) {

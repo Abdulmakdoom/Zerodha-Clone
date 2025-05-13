@@ -15,7 +15,7 @@ export default function Logoutbtn() {
         const result = await response.json();
         dispatch(logout())
         alert(result);
-        window.location.href = "http://localhost:3000";
+        window.location.href = "https://zerodha-clone-r7g5.vercel.app";
       } else {
         alert("Logout failed.");
       }
