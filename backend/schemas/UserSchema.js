@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 const UserSchema = new Schema({
     username: String,
     email: String,
-    password: String
+    password: String,
 })
 
 UserSchema.pre("save", async function (next) {

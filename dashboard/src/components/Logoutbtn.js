@@ -13,8 +13,12 @@ export default function Logoutbtn() {
 
       if (response.ok) {
         const result = await response.json();
+
+        
+        localStorage.removeItem("accessToken");
         dispatch(logout())
         alert(result);
+        
         window.location.href = "https://zerodha-clone-r7g5.vercel.app";
       } else {
         alert("Logout failed.");

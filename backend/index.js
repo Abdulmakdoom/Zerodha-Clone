@@ -320,9 +320,9 @@ app.get("/allHoldings", async (req, res) => {
     };
   
     return res
-      .cookie("accessToken", accessToken, cookieOptions)
+      // .cookie("accessToken", accessToken, cookieOptions)
       .status(200)
-      .json(loggedInUser);
+      .json({loggedInUser, accessToken});
   });
   
 
