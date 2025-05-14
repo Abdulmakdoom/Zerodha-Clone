@@ -39,9 +39,11 @@ const Orders = () => {
           credentials: "include",
         });
         const result = await response.json();
-        if(!response.ok) {
-          window.location.href = "https://zerodha-clone-r7g5.vercel.app/login"
-        }
+        console.log(result);
+        
+        // if(!response.ok) {
+        //   window.location.href = "https://zerodha-clone-r7g5.vercel.app/login"
+        // }
         setOrders(result);
       } catch (error) {
         console.error("Error fetching orders:", error);
