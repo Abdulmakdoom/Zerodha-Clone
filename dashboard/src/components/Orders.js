@@ -31,12 +31,17 @@ import { Link, redirect } from "react-router-dom";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await fetch("https://zerodha-clone-oqrc.onrender.com/order", {
           credentials: "include",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
         });
         const result = await response.json();
         console.log(result);
