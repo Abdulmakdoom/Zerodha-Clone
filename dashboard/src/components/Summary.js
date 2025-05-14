@@ -10,7 +10,8 @@ const Summary = () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
-  console.log(token);
+  
+  localStorage.setItem("accessToken", token)
   
 
 
