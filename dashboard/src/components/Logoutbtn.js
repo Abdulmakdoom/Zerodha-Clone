@@ -4,7 +4,7 @@ import { logout } from "../store/authSlice";
 
 export default function Logoutbtn() {
   const dispatch = useDispatch()
-  const token = urlParams.get("token");
+  const token = localStorage.getItem("accessToken");
   const handleLogout = async () => {
     try {
       const response = await fetch("https://zerodha-clone-oqrc.onrender.com/logout", {
