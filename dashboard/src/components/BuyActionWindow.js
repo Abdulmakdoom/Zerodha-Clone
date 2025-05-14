@@ -12,13 +12,17 @@ const BuyActionWindow = ({ uid }) => {
   const [stockPrice, setStockPrice] = useState(0.0);
 
   const handleBuyClick = () => {
+    const token = localStorage.getItem("accessToken");
     axios.post("https://zerodha-clone-oqrc.onrender.com/newOrder", {
       name: uid,
       qty: stockQuantity,
       price: stockPrice,
       mode: "BUY",
     }, {
-      withCredentials: true, // ✅ send cookies like accessToken
+      // withCredentials: true, // ✅ send cookies like accessToken
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
     })
 
     GeneralContext.closeBuyWindow();
