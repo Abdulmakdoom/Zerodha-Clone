@@ -217,7 +217,8 @@ const connectDB = async ()=> {
 
 const verifyJWT = async (req, res, next) => {
   try {
-    const token = req.cookies?.accessToken;
+    // const token = req.cookies?.accessToken;
+    const token = (req.header("Authorization")?.replace("Bearer ", "") || "").trim();
 
     if (!token) {
       return res.status(401).json({ message: "Unauthorized request. Access token missing." });
