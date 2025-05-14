@@ -4,17 +4,22 @@ import { logout } from "../store/authSlice";
 
 export default function Logoutbtn() {
   const dispatch = useDispatch()
+  const token = urlParams.get("token");
   const handleLogout = async () => {
     try {
       const response = await fetch("https://zerodha-clone-oqrc.onrender.com/logout", {
         method: "POST",
         credentials: "include", // Send cookies
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
 
       if (response.ok) {
         const result = await response.json();
 
-        
+
         localStorage.removeItem("accessToken");
         dispatch(logout())
         alert(result);
