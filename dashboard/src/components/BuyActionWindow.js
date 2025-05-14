@@ -22,7 +22,8 @@ const BuyActionWindow = ({ uid }) => {
       // withCredentials: true, // ✅ send cookies like accessToken
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+        "Content-Type": "application/json",
+      },
     })
 
     GeneralContext.closeBuyWindow();
