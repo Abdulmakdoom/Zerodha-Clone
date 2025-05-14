@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { user } from "../store/authSlice";
 
@@ -8,8 +8,13 @@ const Summary = () => {
   const {username} = useParams()
   dispatch(user(username))
 
+  const token = urlParams.get("token");
+  console.log(token);
+  
+
 
   return (
+
     <>
       <div className="username">
         <h6>Hi, {username}!</h6>
