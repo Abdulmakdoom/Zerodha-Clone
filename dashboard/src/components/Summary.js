@@ -8,6 +8,7 @@ const Summary = () => {
   const {username} = useParams()
   dispatch(user(username))
 
+  const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
   console.log(token);
   
