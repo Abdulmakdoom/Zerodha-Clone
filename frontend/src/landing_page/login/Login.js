@@ -38,7 +38,7 @@ export default function Login() {
         // console.log(data.accessToken);
         localStorage.setItem("accessToken", data.accessToken)
         setMessage(`Welcome back, ${data.loggedInUser.username || data.loggedInUser.email}!`);
-        window.location.href = `https://zerodha-clone-brown.vercel.app/${data.loggedInUser.username}?token=${token}`;
+        window.location.href = `https://zerodha-clone-brown.vercel.app/${data.loggedInUser.username}?token=${data.accessToken}`;
 
         
         // optionally redirect to dashboard
