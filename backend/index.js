@@ -219,12 +219,16 @@ const verifyJWT = async (req, res, next) => {
   try {
     // const token = req.cookies?.accessToken;
     const token = (req.header("Authorization")?.replace("Bearer ", "") || "").trim();
+    console.log(token);
+    
 
     if (!token) {
       return res.status(401).json({ message: "Unauthorized request. Access token missing." });
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log(decoded);
+    
     const user = await User.findById(decoded._id).select("-password -refreshToken");
 
     if (!user) {
