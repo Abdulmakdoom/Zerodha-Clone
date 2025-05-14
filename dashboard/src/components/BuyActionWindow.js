@@ -22,9 +22,23 @@ const BuyActionWindow = ({ uid }) => {
       // withCredentials: true, // ✅ send cookies like accessToken
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+      }
     })
+
+    // const handleBuyClick = () => {
+    //   const token = localStorage.getItem("accessToken");
+    //   axios.post("https://zerodha-clone-oqrc.onrender.com/newOrder", {
+    //     name: uid,
+    //     qty: stockQuantity,
+    //     price: stockPrice,
+    //     mode: "BUY",
+    //   }, {
+    //     // withCredentials: true, // ✅ send cookies like accessToken
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
 
     GeneralContext.closeBuyWindow();
   };
